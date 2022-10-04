@@ -13,7 +13,9 @@ public class CotizationModel {
 	private Date paymentDay;
 
 	public Calendar calculatePaymentDate(Calendar checkDate) {
-		return null;
+		checkDate.add(Calendar.DAY_OF_YEAR, 2);
+		setPaymentDay(checkDate.getTime());
+		return checkDate;
 
 	}
 

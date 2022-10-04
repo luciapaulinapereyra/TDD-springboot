@@ -33,7 +33,6 @@ class CotizationModelTest {
 		cot.calculatePaymentDate(calendar);
 		calendar.setTime(expectedDate);
 		assertEquals(calendar.getTime(), cot.getPaymentDay());
-
 	}
 
 }
