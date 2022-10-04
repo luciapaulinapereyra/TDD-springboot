@@ -65,9 +65,10 @@ class CotizationModelTest {
 
 	@Test
 	void testGetIva() {
-		cot.setInterests(700.0);
-		cot.setManagmentExpense(25000.0);
-		Double expected = 5460.0;
+		cot.setInterests(1000.0);
+		cot.setManagmentExpense(2500.0);
+		cot.calculateIva();
+		Double expected = 735.0;
 		assertEquals(expected, cot.getIva());
 	}
 
@@ -77,6 +78,7 @@ class CotizationModelTest {
 		cot.setInterests(1000.0);
 		cot.setManagmentExpense(250.0);
 		cot.setIva(500.0);
+		cot.calculateNetOperation();
 		Double expected = 8250.0;
 		assertEquals(expected, cot.getNetOperation());
 	}

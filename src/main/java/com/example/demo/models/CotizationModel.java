@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,6 +28,41 @@ public class CotizationModel {
 
 	}
 
+	public void calculateOperationTerm() {
+		Date dateNow = new Date();
+		dateNow.getTime();
+		int days = (int) ((paymentDay.getTime() - dateNow.getTime()) / 86400000);
+		days = days + 1;
+		setOperationTerm(days);
+
+	}
+
+	public void calculateInterests() {
+		Double dailyRate = getDailyRate() / 100;
+		Double total = getCheckAmount() * getOperationTerm() * dailyRate;
+		setInterests(total);
+	}
+
+	public void calculateExpenseManagement() {
+		// Gasto de gestión: Monto del cheque * Tasa de gasto
+		Double expenseRate = getExpenseRate() / 100;
+		Double total = getCheckAmount() * expenseRate;
+		setManagmentExpense(Math.round(total * 100d) /100d);
+	}
+
+	public void calculateIva() {
+		// Iva: (intereses + gasto de gestión) * 21%
+		Double total = (getInterests() + getManagmentExpense()) * 0.21;
+		setIva(total);
+
+	}
+
+	public void calculateNetOperation() {
+		// Neto de operación: Monto - Intereses - Gasto de gestión - Iva
+		Double total = getCheckAmount() - getInterests() - getManagmentExpense() - getIva();
+		setNetOperation(total);
+	}
+
 	public Date getCheckDate() {
 		return checkDate;
 	}
@@ -49,11 +85,6 @@ public class CotizationModel {
 
 	public void setOperationTerm(Integer operationTerm) {
 		this.operationTerm = operationTerm;
-	}
-
-	public void calculateOperationTerm() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public Double getCheckAmount() {
@@ -80,11 +111,6 @@ public class CotizationModel {
 		this.interests = interests;
 	}
 
-	public void calculateInterests() {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public Double getExpenseRate() {
 		return expenseRate;
 	}
@@ -99,11 +125,6 @@ public class CotizationModel {
 
 	public void setManagmentExpense(Double managmentExpense) {
 		this.managmentExpense = managmentExpense;
-	}
-
-	public void calculateExpenseManagement() {
-		// TODO Auto-generated method stub
-		
 	}
 
 	public Double getIva() {
@@ -121,7 +142,5 @@ public class CotizationModel {
 	public void setNetOperation(Double netOperation) {
 		this.netOperation = netOperation;
 	}
-
-
 
 }
